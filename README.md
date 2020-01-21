@@ -1,2 +1,2 @@
 # pizza-shop
-Pizza shop using Spring framework
+Pizza shop web application using Spring framework and Angular.
