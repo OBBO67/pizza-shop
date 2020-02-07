@@ -25,6 +25,11 @@ public class CustomerController {
 		this.assembler = assembler;
 	}
 	
+	/**
+	 * Returns a customer in the body of a HTTP response as JSON.
+	 * @param id	The id of the customer.
+	 * @return		The customer
+	 */
 	@GetMapping("/customers/{id}")
 	public EntityModel<Customer> getCustomer(@PathVariable Long id) {
 		Customer customer = customerRepo.findById(id)

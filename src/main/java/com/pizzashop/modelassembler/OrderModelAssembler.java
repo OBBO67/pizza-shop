@@ -27,10 +27,10 @@ public class OrderModelAssembler implements RepresentationModelAssembler<Order, 
 		if (order.getOrderStatus() == OrderStatus.IN_PROGRESS) {
 			orderResource.add(
 					linkTo(methodOn(OrderController.class)
-							.cancel(order.getId())).withRel("cancel"));
+							.cancelOrder(order.getId())).withRel("cancel"));
 			orderResource.add(
 					linkTo(methodOn(OrderController.class)
-							.complete(order.getId())).withRel("complete"));
+							.completeOrder(order.getId())).withRel("complete"));
 		}
 		
 		return orderResource;
