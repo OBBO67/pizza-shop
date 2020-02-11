@@ -111,6 +111,13 @@ public class OrderController {
 						+ " status"));
 	}
 	
+	/**
+	 * Completes an order by id. If the order is IN_PROGRESS then it can be completed. Otherwise,
+	 * the order is not in a state that can be complete i.e its either been CANCELLED or already
+	 * COMPLETE.
+	 * @param id	The id of the order to complete.
+	 * @return		Either the order which was complete or a VndError.
+	 */
 	@PutMapping(path = "/{id}/complete")
 	public ResponseEntity<RepresentationModel<?>> completeOrder(@PathVariable Long id) {
 		
