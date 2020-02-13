@@ -40,6 +40,12 @@
   grid-area: customer;
   place-self: center;
   justify-content: center;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+}
+
+.item-app-customer:hover {
+  background-color: slategrey;
 }
 
 .item-app-msgs {
