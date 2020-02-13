@@ -18,8 +18,9 @@ export class CustomerComponent implements OnInit {
 
   // TODO: pass the customer id by parameter
   getCustomer(): void {
-    this.customerService
-      .getCustomerById(1)
-      .subscribe(customer => (this.customer = customer));
+    this.customerService.getCustomerById(1).subscribe(customer => {
+      this.customer = customer;
+      console.log(customer);
+    });
   }
 }

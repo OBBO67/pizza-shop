@@ -20,7 +20,9 @@
   opacity: 1;
 }
 
-.item-customer > p {
+.item-customer > p,
+.customer-address > p,
+div > p {
   font-size: 25px;
   color: #ffffff;
 }
