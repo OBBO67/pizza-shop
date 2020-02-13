@@ -1,0 +1,7 @@
+<button class="item-button" id="fetch-button" (click)="getCustomer()">
+  Get Customers
+</button>
+<div class="item-customer" *ngIf="customer !== null && customer !== undefined">
+  <p>Forename: {{ customer.firstName }} Surname: {{ customer.lastName }}</p>
+  <p>Email: {{ customer.email }}</p>
+</div>

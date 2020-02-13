@@ -1,6 +1,7 @@
 package com.pizzashop.controllers;
 
 import org.springframework.hateoas.EntityModel;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
 
 	private CustomerRepository customerRepo;

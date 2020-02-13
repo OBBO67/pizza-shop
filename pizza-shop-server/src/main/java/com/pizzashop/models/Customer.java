@@ -1,9 +1,14 @@
 package com.pizzashop.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import lombok.Data;
 
@@ -21,18 +26,19 @@ public class Customer {
 	/**
 	 * A customer can have more than one address.
 	 */
-	@OneToMany
-	private CustomerAddress address;
+	@OneToMany()
+	@Cascade(CascadeType.ALL)
+	private List<CustomerAddress> addresses;
 	
 	public Customer() {}
 	
 	public Customer(String firstName, String lastName,
-			String email, String password, CustomerAddress address) {
+			String email, String password, List<CustomerAddress> addresses) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.address = address;
+		this.addresses = addresses;
 	}
 
 }

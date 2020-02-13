@@ -1,0 +1,10 @@
+.item-message {
+  grid-area: message;
+  justify-content: center;
+  justify-self: center;
+}
+
+.item-message > h2,
+div > p {
+  color: #ffffff;
+}

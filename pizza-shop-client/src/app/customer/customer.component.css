@@ -1,0 +1,26 @@
+.item-button {
+  grid-area: button;
+  justify-self: center;
+}
+
+#fetch-button {
+  background-color: #4caf50;
+  color: #ffffff;
+  opacity: 0.75;
+  border: none;
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  font-size: 15px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+#fetch-button:hover {
+  opacity: 1;
+}
+
+.item-customer > p {
+  font-size: 25px;
+  color: #ffffff;
+}
