@@ -26,3 +26,15 @@ div > p {
   font-size: 25px;
   color: #ffffff;
 }
+
+#customer-search-id {
+  grid-area: button;
+  padding: 5px 5px;
+  margin: 5px 5px;
+  border-style: solid;
+  border-color: #000000;
+}
+
+#customer-search-label {
+  color: #ffffff;
+}

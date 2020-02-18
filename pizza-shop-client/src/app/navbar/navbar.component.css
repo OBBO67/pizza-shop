@@ -1,0 +1,36 @@
+/* .navbar-container {
+  display: grid;
+  grid-area: navbar;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 1em;
+  align-items: center;
+  text-align: center;
+  border-bottom: 4px solid black;
+  background: green;
+} */
+
+.navbar-home {
+  grid-column: 1;
+}
+
+.navbar-menu {
+  grid-column: 2;
+}
+
+.logo {
+  grid-column: 3;
+  background-image: url("https://blog.codepen.io/wp-content/uploads/2012/06/Black-Large.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 10vh;
+}
+
+.navbar-login {
+  grid-column: 4;
+}
+
+.navbar-signup {
+  grid-column: 5;
+}

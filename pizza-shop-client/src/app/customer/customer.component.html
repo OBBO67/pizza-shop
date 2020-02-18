@@ -1,3 +1,10 @@
+<label id="customer-search-label" for="searchId">Enter Customer ID</label>
+<input
+  id="customer-search-id"
+  name="searchId"
+  type="number"
+  (keyup)="onKey($event)"
+/>
 <button class="item-button" id="fetch-button" (click)="getCustomer()">
   Get Customers
 </button>

@@ -9,6 +9,7 @@ import { CustomerService } from "../customer.service";
 })
 export class CustomerComponent implements OnInit {
   customer: Customer;
+  id: number;
 
   constructor(private customerService: CustomerService) {}
 
@@ -18,9 +19,15 @@ export class CustomerComponent implements OnInit {
 
   // TODO: pass the customer id by parameter
   getCustomer(): void {
-    this.customerService.getCustomerById(1).subscribe(customer => {
-      this.customer = customer;
-      console.log(customer);
-    });
+    if (this.id !== null && this.id !== undefined) {
+      this.customerService.getCustomerById(1).subscribe(customer => {
+        this.customer = customer;
+        console.log(customer);
+      });
+    }
+  }
+
+  onKey(event: KeyboardEvent) {
+    this.id = +(event.target as HTMLInputElement).value;
   }
 }

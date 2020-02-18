@@ -1,0 +1,70 @@
+.container {
+  display: grid;
+  min-height: 100vh;
+  align-items: center; /* centre the items in the row */
+  justify-items: center;
+}
+
+.login-container {
+  display: grid;
+  grid-template-columns: 0.5fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 50vw;
+  justify-items: center;
+  justify-content: center; /* centre the container */
+  align-items: center; /* centre the items in the row */
+  border-style: solid;
+  border-color: #000000;
+  transition-duration: 0.3s;
+  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.2);
+}
+
+.login-container:hover {
+  background-color: coral;
+}
+
+/* .login-container .username-item:hover {
+    background-color: coral;
+  } */
+
+.username-item {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  justify-content: center;
+  align-items: center; /* centre the items in the row */
+  height: 100px;
+}
+
+.password-item {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  justify-content: center;
+  align-items: center; /* centre the items in the row */
+  height: 100px;
+}
+
+#username,
+#password {
+  margin: 5px;
+  height: 40px;
+  border-color: #ffffff;
+  border-style: none;
+  transition-duration: 0.3s;
+}
+
+#username:hover,
+#password:hover {
+  border-style: initial;
+}
+
+#username:focus,
+#password:focus {
+  border-style: solid;
+  border-color: #000000;
+}
+
+#username-label,
+#password-label {
+  margin: 5px;
+  color: #ffffff;
+}
