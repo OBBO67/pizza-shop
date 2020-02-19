@@ -1,3 +1,7 @@
 .homepage-container {
   background-color: dimgrey;
 }
+
+.carousel-item {
+  height: 100vh;
+}
