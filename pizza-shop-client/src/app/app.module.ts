@@ -1,17 +1,39 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
+import { RouterModule, Routes } from "@angular/router";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { MessagesComponent } from "./messages/messages.component";
 import { CustomerComponent } from "./customer/customer.component";
-import { LoginComponent } from './login/login.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from "./login/login.component";
+import { NavbarComponent } from "./navbar/navbar.component";
+import { SignupComponent } from "./signup/signup.component";
+
+const appRoutes: Routes = [
+  { path: "login", component: LoginComponent },
+  { path: "signup", component: SignupComponent }
+];
 
 @NgModule({
-  declarations: [AppComponent, MessagesComponent, CustomerComponent, LoginComponent, NavbarComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    MessagesComponent,
+    CustomerComponent,
+    LoginComponent,
+    NavbarComponent,
+    SignupComponent
+  ],
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
