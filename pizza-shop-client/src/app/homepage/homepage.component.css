@@ -1,7 +1,4 @@
-.homepage-container {
-  background-color: dimgrey;
-}
-
-.carousel-item {
-  height: 100vh;
+.row-buffer {
+  margin-left: 10px;
+  margin-right: 10px;
 }
