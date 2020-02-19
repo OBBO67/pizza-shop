@@ -10,8 +10,11 @@ import { CustomerComponent } from "./customer/customer.component";
 import { LoginComponent } from "./login/login.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SignupComponent } from "./signup/signup.component";
+import { HomepageComponent } from "./homepage/homepage.component";
 
 const appRoutes: Routes = [
+  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: "home", component: HomepageComponent },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent }
 ];
@@ -23,7 +26,8 @@ const appRoutes: Routes = [
     CustomerComponent,
     LoginComponent,
     NavbarComponent,
-    SignupComponent
+    SignupComponent,
+    HomepageComponent
   ],
   imports: [
     RouterModule.forRoot(
