@@ -2,3 +2,7 @@
 .signup-row {
   height: 100%;
 }
+
+.row-margins {
+  margin: 10px;
+}
