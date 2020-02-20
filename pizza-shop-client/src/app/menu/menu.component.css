@@ -1,9 +1,9 @@
 .row-buffer {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 5px;
 }
 
 .card-border {
+  margin: 5px;
   border-color: #fcb103;
   border-width: 5px;
 }
