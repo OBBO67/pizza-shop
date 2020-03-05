@@ -25,7 +25,6 @@ import com.pizzashop.models.User;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping("/users")
 @Log4j2
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
