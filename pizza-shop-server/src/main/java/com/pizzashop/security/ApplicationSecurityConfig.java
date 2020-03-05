@@ -3,6 +3,7 @@ package com.pizzashop.security;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,8 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(
-					authenticationManager(), jwtConfig, secretKey))
+			.addFilter(getJWTAuthenticationFilter())
 			.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
 					JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
@@ -53,6 +53,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasRole(ApplicationUserRole.CUSTOMER.name())
 			.anyRequest()
 			.authenticated();
+	}
+	
+	/*
+	 * Sets the URL for the login filter
+	 */
+	@Bean
+	public JwtUsernameAndPasswordAuthenticationFilter getJWTAuthenticationFilter() {
+	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
+	    		new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey);
+	    filter.setFilterProcessesUrl("/api/login");
+	    return filter;
 	}
 
 }
