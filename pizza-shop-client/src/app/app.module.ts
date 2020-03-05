@@ -13,6 +13,7 @@ import { SignupComponent } from "@app/signup/signup.component";
 import { HomepageComponent } from "@app/homepage/homepage.component";
 import { MenuComponent } from "./menu/menu.component";
 import { AuthGuard } from "./interceptors/auth.guard";
+import { AlertComponent } from './alert/alert.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     SignupComponent,
     HomepageComponent,
-    MenuComponent
+    MenuComponent,
+    AlertComponent
   ],
   imports: [
     RouterModule.forRoot(

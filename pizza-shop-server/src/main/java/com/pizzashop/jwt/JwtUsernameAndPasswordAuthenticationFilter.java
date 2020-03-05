@@ -39,6 +39,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 		this.secretKey = secretKey;
 	}
 	
+	/*
+	 * Here we check if the user is authenticated i.e. here the user is attempting to
+	 * login. If there credentials are valid then we issue them a JWT within the
+	 * successfulAuthentication method.
+	 */
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
