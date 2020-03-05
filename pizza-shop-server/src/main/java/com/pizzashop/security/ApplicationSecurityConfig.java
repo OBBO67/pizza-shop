@@ -43,7 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.addFilter(getJWTAuthenticationFilter())
+			.addFilter(getJwtUsernameAndPasswordAuthenticationFilter())
 			.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
 					JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
@@ -59,7 +59,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * Sets the URL for the login filter
 	 */
 	@Bean
-	public JwtUsernameAndPasswordAuthenticationFilter getJWTAuthenticationFilter() {
+	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() {
 	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
 	    		new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey);
 	    filter.setFilterProcessesUrl("/api/login");
