@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
+import { AlertService } from "@app/services/alert.service";
 
 /*
  * Alert component passes alert messages to the template whenever

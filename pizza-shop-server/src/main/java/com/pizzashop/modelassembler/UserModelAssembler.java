@@ -6,8 +6,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
+import com.pizzashop.auth.User;
 import com.pizzashop.controllers.UserController;
-import com.pizzashop.models.User;
 
 @Component
 public class UserModelAssembler implements RepresentationModelAssembler<User, EntityModel<User>> {

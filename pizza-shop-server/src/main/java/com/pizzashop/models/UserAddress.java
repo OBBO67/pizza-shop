@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class CustomerAddress {
+public class UserAddress {
 	
 	private @Id @GeneratedValue Long id;
 	//private Customer customer;
@@ -18,9 +18,9 @@ public class CustomerAddress {
 	private String city;
 	private String postcode;
 	
-	public CustomerAddress() {}
+	public UserAddress() {}
 
-	public CustomerAddress(String houseNumber, 
+	public UserAddress(String houseNumber, 
 			String addressLine1, String addressLine2, String city, String postcode) {
 		//this.customer = customer;
 		this.houseNumber = houseNumber;

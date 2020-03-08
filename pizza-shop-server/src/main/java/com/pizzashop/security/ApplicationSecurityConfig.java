@@ -5,6 +5,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.pizzashop.auth.ApplicationUserService;
 import com.pizzashop.jwt.JwtConfig;
 import com.pizzashop.jwt.JwtTokenVerifierFilter;
 import com.pizzashop.jwt.JwtUsernameAndPasswordAuthenticationFilter;
@@ -56,10 +58,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	/*
+	 * Define a custom implementation of UserDetailsService to load user-specific 
+	 * data in the security framework. Also set the encryption method for passwords.
+	 */
+	@Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder);
+    }
+	
+	/*
 	 * Sets the URL for the login filter
 	 */
 	@Bean
-	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() {
+	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
+			throws Exception {
 	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
 	    		new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey);
 	    filter.setFilterProcessesUrl("/api/login");

@@ -1,5 +1,7 @@
 package com.pizzashop.security;
 
+import static com.pizzashop.security.ApplicationUserPermission.*;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,7 +13,7 @@ import lombok.Getter;
 
 public enum ApplicationUserRole {
 	
-	CUSTOMER(Sets.newHashSet());
+	CUSTOMER(Sets.newHashSet(MENU_READ, MENU_WRITE));
 	
 	@Getter
 	private final Set<ApplicationUserPermission> permissions;

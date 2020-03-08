@@ -27,12 +27,12 @@ public class Customer {
 	 */
 	@OneToMany()
 	@Cascade(CascadeType.ALL)
-	private List<CustomerAddress> addresses;
+	private List<UserAddress> addresses;
 	
 	public Customer() {}
 	
 	public Customer(String firstName, String lastName,
-			String email, List<CustomerAddress> addresses) {
+			String email, List<UserAddress> addresses) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

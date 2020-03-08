@@ -1,10 +1,10 @@
 package com.pizzashop.exceptions;
 
-public class CustomerNotFoundException extends RuntimeException {
+public class UserNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public CustomerNotFoundException(Long id) {
+	public UserNotFoundException(Long id) {
 		super("Could not find customer with id: " + id);
 	}
 
