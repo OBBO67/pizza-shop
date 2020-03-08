@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
 
 import { AppRoutingModule } from "@app/app-routing.module";
@@ -13,7 +13,9 @@ import { SignupComponent } from "@app/signup/signup.component";
 import { HomepageComponent } from "@app/homepage/homepage.component";
 import { MenuComponent } from "./menu/menu.component";
 import { AuthGuard } from "./interceptors/auth.guard";
-import { AlertComponent } from './alert/alert.component';
+import { AlertComponent } from "./alert/alert.component";
+import { JwtInterceptor } from "./interceptors/jwt.interceptor";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -44,7 +46,10 @@ const appRoutes: Routes = [
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
