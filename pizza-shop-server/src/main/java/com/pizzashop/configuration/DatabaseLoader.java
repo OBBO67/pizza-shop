@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 class DatabaseLoader {
 	
 	@Bean
-	CommandLineRunner initDatabase(UserRepository repository, PasswordEncoder passwordEncoder) {
+	CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		
 		User newUser = new User("Bilbo101",
 				passwordEncoder.encode("password"),
@@ -33,7 +33,7 @@ class DatabaseLoader {
 				Arrays.asList(new UserAddress("test", "test", "test", "test", "test")));
 		
 		return args -> {
-			log.info("Preloading " + repository.save(newUser));
+			log.info("Preloading " + userRepository.save(newUser));
 		};
 	}
 }

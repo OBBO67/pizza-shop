@@ -5,9 +5,8 @@ import static com.pizzashop.security.ApplicationUserPermission.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import com.google.common.collect.Sets;
+import com.pizzashop.auth.ApplicationGrantedAuthority;
 
 import lombok.Getter;
 
@@ -22,15 +21,15 @@ public enum ApplicationUserRole {
 		this.permissions = permissions;
 	}
 	
-	public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
-		Set<SimpleGrantedAuthority> authorities = 
+	public Set<ApplicationGrantedAuthority> getGrantedAuthorities() {
+		Set<ApplicationGrantedAuthority> authorities = 
 				getPermissions()
 				.stream()
-				.map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+				.map(permission -> new ApplicationGrantedAuthority(permission.getPermission()))
 				.collect(Collectors.toSet());
 		
-		authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+		authorities.add(new ApplicationGrantedAuthority("ROLE_" + this.name()));
 		
-		return authorities;			
+		return authorities;
 	}
 }

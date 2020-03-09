@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pizzashop.auth.User;
 import com.pizzashop.data.UserRepository;
 import com.pizzashop.exceptions.UserNotFoundException;
-import com.pizzashop.modelassembler.CustomerModelAssembler;
 import com.pizzashop.modelassembler.UserModelAssembler;
 import com.pizzashop.models.Customer;
 import com.pizzashop.models.UserAddress;
@@ -36,20 +35,20 @@ import lombok.extern.log4j.Log4j2;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-	private final UserRepository userRepo;
+	private final UserRepository userRepository;
 	private UserModelAssembler assembler;
 	private final PasswordEncoder passwordEncoder;
 	
-	public UserController(UserRepository userRepo, UserModelAssembler assembler, 
+	public UserController(UserRepository userRepository, UserModelAssembler assembler, 
 			PasswordEncoder passwordEncoder) {
-		this.userRepo = userRepo;
+		this.userRepository = userRepository;
 		this.assembler = assembler;
 		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@GetMapping("/users/{id}")
 	public EntityModel<User> getUser(@PathVariable Long id) {
-		User user = userRepo.findById(id)
+		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(id));
 		
 		log.debug("Found customer: " + user.toString());
@@ -59,7 +58,7 @@ public class UserController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<User> newUser(@RequestBody User user) {
-		User userExists = userRepo.findByUsername(user.getUsername());
+		User userExists = userRepository.findByUsername(user.getUsername());
 		
 		if (userExists != null) {
 			
@@ -88,7 +87,7 @@ public class UserController {
 				passwordEncoder.encode(user.getPassword()), CUSTOMER.getGrantedAuthorities(),
 				user.getFirstName(), user.getLastName(), user.getEmail(), newAddresses);
 		
-		userRepo.save(newUser);
+		userRepository.save(newUser);
 		return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
 	}
 	

@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import io.jsonwebtoken.security.Keys;
+import lombok.Data;
 
+@Data
 @Configuration
 public class JwtSecretKey {
 	
@@ -15,7 +17,6 @@ public class JwtSecretKey {
 	
 	@Autowired
 	public JwtSecretKey(JwtConfig jwtConfig) {
-		super();
 		this.jwtConfig = jwtConfig;
 	}
 	

@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pizzashop.models.Customer;
@@ -33,19 +34,26 @@ public class User implements UserDetails {
 	
 	private final String username;
 	private final String password;
-	private final Set<? extends GrantedAuthority> grantedAuthorities;
+	
+	/*
+	 * A user can have multiple granted authorities in the application.
+	 */
+	@OneToMany
+	@Cascade(CascadeType.ALL) // Save all objects in the collection
+	private final Set<ApplicationGrantedAuthority> grantedAuthorities;
+	
 	private String firstName;
 	private String lastName;
 	private String email;	
 	
 	/**
-	 * A customer can have more than one address.
+	 * A user can have more than one address.
 	 */
 	@OneToMany()
 	@Cascade(CascadeType.ALL)
 	private List<UserAddress> addresses;
 	
-	public User(String username, String password, Set<? extends GrantedAuthority> grantedAuthorities,
+	public User(String username, String password, Set<ApplicationGrantedAuthority> grantedAuthorities,
 			String firstName, String lastName, String email, List<UserAddress> addresses) {
 		this.username = username;
 		this.password = password;
@@ -57,7 +65,7 @@ public class User implements UserDetails {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Collection<ApplicationGrantedAuthority> getAuthorities() {
 		return grantedAuthorities;
 	}
 

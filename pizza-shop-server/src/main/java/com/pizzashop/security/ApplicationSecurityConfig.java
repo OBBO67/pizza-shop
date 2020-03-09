@@ -24,18 +24,18 @@ import com.pizzashop.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final PasswordEncoder passwordEncoder;
-	private final ApplicationUserService appUserService;
-	private final JwtConfig jwtConfig;
+	private final ApplicationUserService applicationUserService;
 	private final SecretKey secretKey;
+	private final JwtConfig jwtConfig;
 	
 	@Autowired
-	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService appUserService,
-			JwtConfig jwtConfig, SecretKey secretKey) {
+	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService,
+			SecretKey secretKey, JwtConfig jwtConfig) {
 		super();
 		this.passwordEncoder = passwordEncoder;
-		this.appUserService = appUserService;
-		this.jwtConfig = jwtConfig;
+		this.applicationUserService = applicationUserService;
 		this.secretKey = secretKey;
+		this.jwtConfig = jwtConfig;
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(applicationUserService).passwordEncoder(passwordEncoder);
     }
 	
 	/*
@@ -73,7 +73,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
 			throws Exception {
 	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
-	    		new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey);
+	    		new JwtUsernameAndPasswordAuthenticationFilter(null, jwtConfig, secretKey);
+	    filter.setAuthenticationManager(authenticationManager());
 	    filter.setFilterProcessesUrl("/api/login");
 	    return filter;
 	}
