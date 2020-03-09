@@ -45,13 +45,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.addFilter(getJwtUsernameAndPasswordAuthenticationFilter())
+			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
 			.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
 					JwtUsernameAndPasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers("/", "/api/login", "/api/signup", "/css/*", "/js/*")
+			.antMatchers("/", "/api/signup", "/css/*", "/js/*")
 				.permitAll()
-			.antMatchers("/menu/**")
+			.antMatchers("/api/**")
 				.hasRole(ApplicationUserRole.CUSTOMER.name())
 			.anyRequest()
 			.authenticated();
@@ -69,14 +69,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	/*
 	 * Sets the URL for the login filter
 	 */
-	@Bean
-	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
-			throws Exception {
-	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
-	    		new JwtUsernameAndPasswordAuthenticationFilter(null, jwtConfig, secretKey);
-	    filter.setAuthenticationManager(authenticationManager());
-	    filter.setFilterProcessesUrl("/api/login");
-	    return filter;
-	}
+//	@Bean
+//	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
+//			throws Exception {
+//	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
+//	    		new JwtUsernameAndPasswordAuthenticationFilter(null, jwtConfig, secretKey);
+//	    filter.setAuthenticationManager(authenticationManager());
+//	    filter.setFilterProcessesUrl("/api/login");
+//	    return filter;
+//	}
 
 }

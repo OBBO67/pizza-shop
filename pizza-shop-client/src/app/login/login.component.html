@@ -10,12 +10,16 @@
             type="text"
             formControlName="username"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            [ngClass]="{ 'is-invalid': submitted && usernameGroup.errors }"
           />
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+          <div
+            *ngIf="submitted && usernameGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="usernameGroup.errors.required">
+              Username is required
+            </div>
           </div>
-          email" />
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -23,10 +27,15 @@
             type="password"
             formControlName="password"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            [ngClass]="{ 'is-invalid': submitted && passwordGroup.errors }"
           />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+          <div
+            *ngIf="submitted && passwordGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="passwordGroup.errors.required">
+              Password is required
+            </div>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>

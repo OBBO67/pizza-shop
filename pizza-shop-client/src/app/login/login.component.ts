@@ -11,10 +11,10 @@ import { first } from "rxjs/operators";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  private loginForm: FormGroup;
-  private submitted = false;
-  private returnUrl: string;
-  private error = "";
+  loginForm: FormGroup;
+  submitted = false;
+  returnUrl: string;
+  error = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,6 +36,14 @@ export class LoginComponent implements OnInit {
 
     // get return url from route params or default to "/"
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
+  }
+
+  get usernameGroup(): FormGroup {
+    return this.loginForm.controls.username as FormGroup;
+  }
+
+  get passwordGroup(): FormGroup {
+    return this.loginForm.controls.password as FormGroup;
   }
 
   onSubmit() {

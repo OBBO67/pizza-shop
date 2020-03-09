@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,10 +36,10 @@ public class User implements UserDetails {
 	private final String username;
 	private final String password;
 	
-	/*
+	/**
 	 * A user can have multiple granted authorities in the application.
 	 */
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER) // pull child entities automatically
 	@Cascade(CascadeType.ALL) // Save all objects in the collection
 	private final Set<ApplicationGrantedAuthority> grantedAuthorities;
 	
@@ -49,9 +50,15 @@ public class User implements UserDetails {
 	/**
 	 * A user can have more than one address.
 	 */
-	@OneToMany()
-	@Cascade(CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER) // pull child entities automatically
+	@Cascade(CascadeType.ALL) // Save all objects in the collection
 	private List<UserAddress> addresses;
+	
+	public User() {
+		username = null;
+		password = null;
+		grantedAuthorities = null;
+	}
 	
 	public User(String username, String password, Set<ApplicationGrantedAuthority> grantedAuthorities,
 			String firstName, String lastName, String email, List<UserAddress> addresses) {

@@ -10,10 +10,15 @@
             type="text"
             formControlName="firstName"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+            [ngClass]="{
+              'is-invalid': submitted && firstNameGroup.errors
+            }"
           />
-          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-            <div *ngIf="f.firstName.errors.required">
+          <div
+            *ngIf="submitted && firstNameGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="firstNameGroup.errors.required">
               First Name is required
             </div>
           </div>
@@ -24,10 +29,15 @@
             type="text"
             formControlName="lastName"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+            [ngClass]="{ 'is-invalid': submitted && lastNameGroup.errors }"
           />
-          <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+          <div
+            *ngIf="submitted && lastNameGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="lastNameGroup.errors.required">
+              Last Name is required
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -36,10 +46,15 @@
             type="text"
             formControlName="username"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            [ngClass]="{ 'is-invalid': submitted && usernameGroup.errors }"
           />
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+          <div
+            *ngIf="submitted && usernameGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="usernameGroup.errors.required">
+              Username is required
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -84,11 +99,16 @@
             type="password"
             formControlName="password"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            [ngClass]="{ 'is-invalid': submitted && passwordGroup.errors }"
           />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
-            <div *ngIf="f.password.errors.minlength">
+          <div
+            *ngIf="submitted && passwordGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="passwordGroup.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="passwordGroup.errors.minlength">
               Password must be at least 6 characters
             </div>
           </div>

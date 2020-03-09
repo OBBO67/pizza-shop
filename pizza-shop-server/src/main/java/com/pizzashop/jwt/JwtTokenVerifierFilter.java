@@ -29,7 +29,6 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 	private final SecretKey secretKey;
 	
 	public JwtTokenVerifierFilter(JwtConfig jwtConfig, SecretKey secretKey) {
-		super();
 		this.jwtConfig = jwtConfig;
 		this.secretKey = secretKey;
 	}
