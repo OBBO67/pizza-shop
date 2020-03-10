@@ -10,13 +10,17 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pizzashop.auth.User;
 
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -24,6 +28,7 @@ import java.util.Date;
  * Used to verify the credentials of the user using their
  * username and password.
  */
+@Slf4j
 public class JwtUsernameAndPasswordAuthenticationFilter
 	extends UsernamePasswordAuthenticationFilter {
 	
@@ -48,6 +53,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		
+		log.info("Attempting authentication");
+		
 		try {
 			UsernameAndPasswordAuthenticationRequest authRequest
 											= new ObjectMapper().readValue(
@@ -60,6 +67,15 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 			
 			// check username exists and password is correct
 			Authentication authenticate = authManager.authenticate(auth);
+			log.info(authenticate.getPrincipal().toString());
+			
+			if (authenticate.getPrincipal() instanceof User) {
+				log.info("Found the user");
+			}
+			
+			// Set SecurityContextHolder Authentication here?????
+			SecurityContextHolder.getContext().setAuthentication(authenticate);
+			
 			return authenticate;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -75,6 +91,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
+		log.info("Generating jwt");
+		
 		// generate a jwt
 		String token = Jwts
 						.builder()
@@ -88,7 +106,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 		
 		// add the jwt to the response header
 		response.addHeader(jwtConfig.getAuthorizationHeader(), 
-					jwtConfig.getTokenPrefix() + token);	
+					jwtConfig.getTokenPrefix() + token);
+		
+		if (authResult.getPrincipal() instanceof User) {
+			log.info("User: " + authResult.toString());
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		String userJsonString = mapper.writeValueAsString(authResult.getPrincipal());
+//		String employeeJsonString = new Gson().toJson(authResult.getPrincipal());
+		response.getWriter().write(userJsonString);;
+		
 	}
 	
 }

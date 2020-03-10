@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 
 import { User } from "@app/models/user";
 
@@ -35,12 +35,18 @@ export class AuthenticationService {
    * The user is then published to all subscribers with the call to this.currentUserSubject.next(user).
    */
   login(username: string, password: string) {
+    // post to login returns a jwt.
+    // I think i need to then make another request to get the user details using the jwt.
     return this.http
-      .post<any>("/api/login", { username, password })
+      .post<any>("http://localhost:8080/api/login", { username, password })
       .pipe(
         map(user => {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          // store user details and jwt token in local storage
+          // to keep user logged in between page refreshes
+          // use switchMap to switch to a new observable i.e. a new request
+
           localStorage.setItem("currentUser", JSON.stringify(user));
+          console.log(JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;
         })

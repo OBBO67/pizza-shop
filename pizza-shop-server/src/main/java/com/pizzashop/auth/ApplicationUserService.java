@@ -32,23 +32,7 @@ public class ApplicationUserService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		List<UserAddress> newAddresses = new ArrayList<>();
-		
-		UserAddress userAddress = null;
-		
-		if (user.getAddresses() != null && user.getAddresses().size() > 0) {
-			userAddress = new UserAddress(
-					user.getAddresses().get(0).getHouseNumber(), 
-					user.getAddresses().get(0).getAddressLine1(), 
-					user.getAddresses().get(0).getAddressLine2(), 
-					user.getAddresses().get(0).getCity(), 
-					user.getAddresses().get(0).getPostcode());
-		}
-		
-		newAddresses.add(userAddress);
-		
-		return new User(user.getUsername(), user.getPassword(), CUSTOMER.getGrantedAuthorities(),
-				user.getFirstName(), user.getLastName(), user.getEmail(), newAddresses);
+		return user;
 	}
 
 }

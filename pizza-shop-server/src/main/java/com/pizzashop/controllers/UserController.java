@@ -56,6 +56,12 @@ public class UserController {
 		return assembler.toModel(user);
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<User> login(@RequestBody User user) {
+		User userExists = userRepository.findByUsername(user.getUsername());
+		return new ResponseEntity<User>(userExists, HttpStatus.OK);
+	}
+	
 	@PostMapping("/signup")
 	public ResponseEntity<User> newUser(@RequestBody User user) {
 		User userExists = userRepository.findByUsername(user.getUsername());

@@ -12,8 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.pizzashop.auth.ApplicationUserService;
+import com.pizzashop.filters.RequestFilter;
 import com.pizzashop.jwt.JwtConfig;
 import com.pizzashop.jwt.JwtTokenVerifierFilter;
 import com.pizzashop.jwt.JwtUsernameAndPasswordAuthenticationFilter;
@@ -45,6 +49,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
+			.addFilterBefore(new RequestFilter(), JwtUsernameAndPasswordAuthenticationFilter.class)
 			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
 			.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
 					JwtUsernameAndPasswordAuthenticationFilter.class)
