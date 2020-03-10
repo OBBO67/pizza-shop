@@ -111,10 +111,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 		if (authResult.getPrincipal() instanceof User) {
 			log.info("User: " + authResult.toString());
 		}
+		
+		// add the user to the body of the response
 		ObjectMapper mapper = new ObjectMapper();
 		String userJsonString = mapper.writeValueAsString(authResult.getPrincipal());
-//		String employeeJsonString = new Gson().toJson(authResult.getPrincipal());
-		response.getWriter().write(userJsonString);;
+		response.getWriter().write(userJsonString);
 		
 	}
 	
