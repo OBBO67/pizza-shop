@@ -1,3 +1,10 @@
+.welcome-jumbotron {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .row-buffer {
   margin-left: 10px;
   margin-right: 10px;
@@ -6,4 +13,8 @@
 .card-border {
   border-color: #fcb103;
   border-width: 5px;
+}
+
+.pizza-emoji {
+  font-size: 40px;
 }

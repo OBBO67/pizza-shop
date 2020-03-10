@@ -35,8 +35,6 @@ export class AuthenticationService {
    * The user is then published to all subscribers with the call to this.currentUserSubject.next(user).
    */
   login(username: string, password: string) {
-    // post to login returns a jwt.
-    // I think i need to then make another request to get the user details using the jwt.
     return this.http
       .post<any>("http://localhost:8080/api/login", { username, password })
       .pipe(

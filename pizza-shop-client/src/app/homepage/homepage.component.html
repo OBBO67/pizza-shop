@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron welcome-jumbotron">
   <h1 class="display-4">The PizzaShap</h1>
   <p class="lead">
     Welcome to the PizzaShap. We have the best pizza in town. Join us and see
@@ -11,25 +11,43 @@
 </div>
 
 <div class="row justify-content-center row-buffer">
-  <div class="col-4">
-    <div class="card card-border">
-      <div class="card-body text-center">
-        <h5 class="card-title">Welcome Back</h5>
-        <p class="card-text">
-          Log back in and get ordering!
-        </p>
-        <a href="/login" class="card-link">Login</a>
+  <div *ngIf="!currentUser">
+    <div class="col-4">
+      <div class="card card-border">
+        <div class="card-body text-center">
+          <h5 class="card-title">Welcome Back</h5>
+          <p class="card-text">
+            Log back in and get ordering!
+          </p>
+          <a href="/login" class="card-link">Login</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card card-border">
+        <div class="card-body text-center">
+          <h5 class="card-title">Join Us</h5>
+          <p class="card-text">
+            Sign up and order some pizza!
+          </p>
+          <a href="/signup" class="card-link">Sign Up</a>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-4">
+  <!-- Only displayed is a user is logged in -->
+  <div class="col-6">
     <div class="card card-border">
       <div class="card-body text-center">
-        <h5 class="card-title">Join Us</h5>
+        <h5 class="card-title">
+          Welcome Back <span>{{ currentUser.firstName }}</span>
+        </h5>
         <p class="card-text">
-          Sign up and order some pizza!
+          Go to your profile or get ordering some pizza!
         </p>
-        <a href="/signup" class="card-link">Sign Up</a>
+        <span class="pizza-emoji">🍕</span>
+        <a href="/profile" class="card-link">Profile</a>
+        <a href="/menu" class="card-link">To our menu</a>
       </div>
     </div>
   </div>

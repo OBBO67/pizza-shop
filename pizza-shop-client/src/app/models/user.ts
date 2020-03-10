@@ -5,7 +5,8 @@ export interface User {
   id: number;
   username: string;
   password: string;
-  customer: Customer;
+  firstName: string;
+  lastName: string;
   address: Address;
   token?: string; // optional
 }
