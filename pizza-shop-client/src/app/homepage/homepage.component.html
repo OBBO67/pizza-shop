@@ -11,6 +11,7 @@
 </div>
 
 <div class="row justify-content-center row-buffer">
+  <!-- If user isn't logged in, show login and sign up cards -->
   <div *ngIf="!currentUser">
     <div class="col-4">
       <div class="card card-border">
@@ -36,18 +37,20 @@
     </div>
   </div>
   <!-- Only displayed is a user is logged in -->
-  <div class="col-6">
-    <div class="card card-border">
-      <div class="card-body text-center">
-        <h5 class="card-title">
-          Welcome Back <span>{{ currentUser.firstName }}</span>
-        </h5>
-        <p class="card-text">
-          Go to your profile or get ordering some pizza!
-        </p>
-        <span class="pizza-emoji">🍕</span>
-        <a href="/profile" class="card-link">Profile</a>
-        <a href="/menu" class="card-link">To our menu</a>
+  <div *ngIf="currentUser">
+    <div class="col-6">
+      <div class="card card-border">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            Welcome Back <span>{{ currentUser.firstName }}</span>
+          </h5>
+          <p class="card-text">
+            Go to your profile or get ordering some pizza!
+          </p>
+          <span class="pizza-emoji">🍕</span>
+          <a href="/profile" class="card-link">Profile</a>
+          <a href="/menu" class="card-link">To our menu</a>
+        </div>
       </div>
     </div>
   </div>
