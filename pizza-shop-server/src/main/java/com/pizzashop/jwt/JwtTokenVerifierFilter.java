@@ -22,7 +22,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 	
 	private final JwtConfig jwtConfig;
@@ -81,5 +83,15 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 		// pass onto next filter
 		filterChain.doFilter(request, response);
 	}
+	
+	/**
+	 * Used for custom filtering. Return true to avoid filtering for a certain request.
+	 */
+//	@Override
+//	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//		String requestUrl = request.getRequestURL().toString();
+//		log.info("Request URL: " + requestUrl);
+//		return false;
+//	}
 
 }

@@ -13,7 +13,11 @@ import { User } from "@app/models/user";
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  /**
+   * CREATE - Sign a new user up
+   */
   signup(user: User) {
-    return this.http.post("api/signup", user);
+    console.log(`User signup data: ${JSON.stringify(user)}`);
+    return this.http.post("http://localhost:8080/api/signup", user);
   }
 }

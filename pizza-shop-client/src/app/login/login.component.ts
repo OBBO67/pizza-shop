@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ) {
     // redirect to menu if already logged in
     if (this.authenticationService.currentUserValue) {
-      this.router.navigate(["/menu"]);
+      this.router.navigate(["/home"]);
     }
   }
 
@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
           console.log(`Data returned from login: ${data}`); // this is just the user here
           console.log(this.returnUrl);
           this.router.navigate([this.returnUrl]);
+          location.reload(true);
         },
         error => {
           this.error = error;

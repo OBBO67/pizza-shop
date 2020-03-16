@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map, switchMap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 import { User } from "@app/models/user";
 
@@ -18,6 +18,10 @@ export class AuthenticationService {
   private currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
+    /**
+     * A BehaviourSubject keeps hold of the current user and emits it
+     * to any new subscribers as soon as they subscribe. */
+
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem("currentUser"))
     );

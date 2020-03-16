@@ -73,7 +73,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 				log.info("Found the user");
 			}
 			
-			// Set SecurityContextHolder Authentication here?????
 			SecurityContextHolder.getContext().setAuthentication(authenticate);
 			
 			return authenticate;

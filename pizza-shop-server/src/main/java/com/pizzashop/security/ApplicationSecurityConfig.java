@@ -5,6 +5,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +28,9 @@ import com.pizzashop.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	public static final String SIGN_UP_URL = "/api/signup";
+	public static final String API_ROOT_URL = "/api/**";
+	
 	private final PasswordEncoder passwordEncoder;
 	private final ApplicationUserService applicationUserService;
 	private final SecretKey secretKey;
@@ -44,22 +48,24 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http
 			.csrf().disable()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.addFilterBefore(new RequestFilter(), JwtUsernameAndPasswordAuthenticationFilter.class)
-			.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-			.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
-					JwtUsernameAndPasswordAuthenticationFilter.class)
-			.authorizeRequests()
-			.antMatchers("/", "/api/signup", "/css/*", "/js/*")
-				.permitAll()
-			.antMatchers("/api/**")
-				.hasRole(ApplicationUserRole.CUSTOMER.name())
-			.anyRequest()
-			.authenticated();
+				.authorizeRequests()
+				.antMatchers("/css/*", "/js/*").permitAll()
+				.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+			.and()
+				.authorizeRequests()
+				.antMatchers(API_ROOT_URL)
+				.authenticated()
+			.and()
+				.addFilterBefore(new RequestFilter(), JwtUsernameAndPasswordAuthenticationFilter.class)
+				.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+				.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
+						JwtUsernameAndPasswordAuthenticationFilter.class);
 	}
 	
 	/*

@@ -58,40 +58,91 @@
           </div>
         </div>
         <div class="form-group">
+          <label for="houseNumber">House Number:</label>
+          <input
+            type="text"
+            formControlName="houseNumber"
+            class="form-control"
+            placeholder="Enter your house/flat number"
+            id="houseNumber"
+          />
+          <div
+            *ngIf="submitted && houseNumberGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="houseNumberGroup.errors.required">
+              House number is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
           <label for="addressLine1">Address Line 1:</label>
           <input
             type="text"
+            formControlName="addressLine1"
             class="form-control"
             placeholder="Enter your address"
             id="addressLine1"
           />
+          <div
+            *ngIf="submitted && addressLine1Group.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="addressLine1Group.errors.required">
+              Address line 1 is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="addressLine2">Address Line 2:</label>
           <input
             type="text"
+            formControlName="addressLine2"
             class="form-control"
             placeholder="Enter your address"
             id="addressLine2"
           />
+          <div
+            *ngIf="submitted && addressLine2Group.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="addressLine2Group.errors.required">
+              Address line 2 is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
-          <label for="town">Town:</label>
+          <label for="town">City:</label>
           <input
             type="text"
+            formControlName="city"
             class="form-control"
-            placeholder="Enter your town"
-            id="town"
+            placeholder="Enter your city/town"
+            id="city"
           />
+          <div *ngIf="submitted && cityGroup.errors" class="invalid-feedback">
+            <div *ngIf="cityGroup.errors.required">
+              City is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="postcode">Postcode:</label>
           <input
             type="text"
+            formControlName="postcode"
             class="form-control"
             placeholder="Enter your postcode"
             id="postcode"
           />
+          <div
+            *ngIf="submitted && postcodeGroup.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="postcodeGroup.errors.required">
+              Postcode is required
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -113,7 +164,13 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Signup</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="signupForm.invalid"
+        >
+          Sign Up
+        </button>
       </form>
     </div>
     <div class="col"></div>

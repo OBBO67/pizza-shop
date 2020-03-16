@@ -1,3 +1,7 @@
 .pizza-emoji-icon {
   font-size: 40px;
 }
+
+.logout-link {
+  cursor: pointer;
+}

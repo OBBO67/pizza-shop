@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "@app/app-routing.module";
 import { AppComponent } from "@app/app.component";
 import { MessagesComponent } from "@app/messages/messages.component";
-import { CustomerComponent } from "@app/customer/customer.component";
 import { LoginComponent } from "@app/login/login.component";
 import { NavbarComponent } from "@app/navbar/navbar.component";
 import { SignupComponent } from "@app/signup/signup.component";
@@ -30,7 +29,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     MessagesComponent,
-    CustomerComponent,
     LoginComponent,
     NavbarComponent,
     SignupComponent,
