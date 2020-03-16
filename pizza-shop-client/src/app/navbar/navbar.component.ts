@@ -14,7 +14,11 @@ export class NavbarComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router
-  ) {}
+  ) {
+    this.authService.getCurrentUserSubject.subscribe(currUser => {
+      this.currentUser = currUser;
+    });
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -23,6 +27,6 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(["/login"]);
-    location.reload(true);
+    this.currentUser = this.authService.currentUserValue;
   }
 }

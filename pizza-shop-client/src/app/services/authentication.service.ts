@@ -32,6 +32,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public get getCurrentUserSubject(): BehaviorSubject<User> {
+    return this.currentUserSubject;
+  }
+
   /*
    * Sends the users credentials to the api login route.
    * If successful the user object including the JWT are stored in localStorage.

@@ -65,7 +65,8 @@ export class LoginComponent implements OnInit {
           console.log(`Data returned from login: ${data}`); // this is just the user here
           console.log(this.returnUrl);
           this.router.navigate([this.returnUrl]);
-          location.reload(true);
+          // this.currentUser = this.authService.currentUserValue;
+          // location.reload(true);
         },
         error => {
           this.error = error;
