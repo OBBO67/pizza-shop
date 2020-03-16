@@ -1,11 +1,15 @@
 import { Address } from "@app/models/customer-address";
 
-export interface User {
+export class User {
   id: number;
   username: string;
   password: string;
   firstName: string;
   lastName: string;
-  address: Address;
+  addresses: Array<Address>;
   token?: string; // optional
+
+  constructor() {
+    this.addresses = [];
+  }
 }

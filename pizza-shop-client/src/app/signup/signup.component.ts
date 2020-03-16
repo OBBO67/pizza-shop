@@ -6,6 +6,8 @@ import { AuthenticationService } from "@app/services/authentication.service";
 import { UserService } from "@app/services/user.service";
 import { first } from "rxjs/operators";
 import { AlertService } from "@app/services/alert.service";
+import { Address } from "@app/models/customer-address";
+import { User } from "@app/models/user";
 
 @Component({
   selector: "app-signup",
@@ -98,14 +100,36 @@ export class SignupComponent implements OnInit {
     const signUpData = this.signupForm.value;
     console.log(`Signup data from form: ${JSON.stringify(signUpData)}`);
 
+    const newUser = this.buildUser(signUpData);
+
+    console.log(`New user from form: ${JSON.stringify(newUser)}`);
+
     // this.loading = true;
     this.userService
-      .signup(this.signupForm.value)
+      .signup(newUser)
       .pipe(first())
       .subscribe(data => {
         console.log(`Returned data: ${JSON.stringify(data)}`);
         this.alertService.success("Registration successful", true);
         this.router.navigate(["/login"]);
       });
+  }
+
+  private buildUser(signUpData: any): User {
+    const userAddress = new Address();
+    userAddress.houseNumber = signUpData.houseNumber;
+    userAddress.addressLine1 = signUpData.addressLine1;
+    userAddress.addressLine2 = signUpData.addressLine2;
+    userAddress.city = signUpData.city;
+    userAddress.postcode = signUpData.postcode;
+
+    const newUser = new User();
+    newUser.firstName = signUpData.firstName;
+    newUser.lastName = signUpData.lastName;
+    newUser.username = signUpData.username;
+    newUser.addresses.push(userAddress);
+    newUser.password = signUpData.password;
+
+    return newUser;
   }
 }
