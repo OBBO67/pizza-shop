@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzashop.auth.User;
 import com.pizzashop.data.UserRepository;
 import com.pizzashop.exceptions.UserNotFoundException;
@@ -56,11 +59,23 @@ public class UserController {
 		return assembler.toModel(user);
 	}
 	
-//	@PostMapping("/login")
-//	public ResponseEntity<User> login(@RequestBody User user) {
-//		User userExists = userRepository.findByUsername(user.getUsername());
-//		return new ResponseEntity<User>(userExists, HttpStatus.OK);
-//	}
+	@GetMapping("/users/username")
+	public ResponseEntity<String> getUserByUsername(@RequestParam(value="username") String username) 
+			throws JsonProcessingException {
+		User userExists = userRepository.findByUsername(username);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (userExists != null) {
+			
+			log.debug("User with username already exists");
+			
+			return new ResponseEntity<>(mapper.writeValueAsString("Username taken"), 
+					HttpStatus.CONFLICT);
+		}
+		
+		return new ResponseEntity<>(mapper.writeValueAsString("Username available"), 
+				HttpStatus.OK);
+	}
 	
 	@PostMapping("/signup")
 	public ResponseEntity<User> newUser(@RequestBody User user) {
