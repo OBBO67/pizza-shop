@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +37,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @Log4j2
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class UserController {
 
 	private final UserRepository userRepository;
@@ -49,7 +51,7 @@ public class UserController {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("/user/{id}")
 	public EntityModel<User> getUser(@PathVariable Long id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException(id));
@@ -59,7 +61,8 @@ public class UserController {
 		return assembler.toModel(user);
 	}
 	
-	@GetMapping("/users/username")
+	@PreAuthorize("permitAll()")
+	@GetMapping("/user/username")
 	public ResponseEntity<String> getUserByUsername(@RequestParam(value="username") String username) 
 			throws JsonProcessingException {
 		User userExists = userRepository.findByUsername(username);
@@ -77,6 +80,7 @@ public class UserController {
 				HttpStatus.OK);
 	}
 	
+	@PreAuthorize("permitAll()")
 	@PostMapping("/signup")
 	public ResponseEntity<User> newUser(@RequestBody User user) {
 		User userExists = userRepository.findByUsername(user.getUsername());

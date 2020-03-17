@@ -28,8 +28,10 @@ import com.pizzashop.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	public static final String SIGN_UP_URL = "/api/signup";
 	public static final String API_ROOT_URL = "/api/**";
+	public static final String SIGN_UP_URL = "/api/signup";
+	public static final String LOGIN_URL = "/api/login";
+	public static final String CHECK_USERNAME_URL = "/api/user/username";
 	
 	private final PasswordEncoder passwordEncoder;
 	private final ApplicationUserService applicationUserService;
@@ -57,18 +59,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/css/*", "/js/*").permitAll()
 				.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-			.and()
-				.authorizeRequests()
-				.antMatchers(API_ROOT_URL)
-				.authenticated()
+				.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+				.antMatchers(HttpMethod.GET, CHECK_USERNAME_URL).permitAll()
+				.anyRequest().authenticated()
 			.and()
 				.addFilterBefore(new RequestFilter(), JwtUsernameAndPasswordAuthenticationFilter.class)
-				.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+				.addFilter(getJwtUsernameAndPasswordAuthenticationFilter())
 				.addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, secretKey),
 						JwtUsernameAndPasswordAuthenticationFilter.class);
 	}
 	
-	/*
+	/**
 	 * Define a custom implementation of UserDetailsService to load user-specific 
 	 * data in the security framework. Also set the encryption method for passwords.
 	 */
@@ -77,17 +78,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(applicationUserService).passwordEncoder(passwordEncoder);
     }
 	
-	/*
+	/**
 	 * Sets the URL for the login filter
 	 */
-//	@Bean
-//	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
-//			throws Exception {
-//	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
-//	    		new JwtUsernameAndPasswordAuthenticationFilter(null, jwtConfig, secretKey);
-//	    filter.setAuthenticationManager(authenticationManager());
-//	    filter.setFilterProcessesUrl("/api/login");
-//	    return filter;
-//	}
+	@Bean
+	public JwtUsernameAndPasswordAuthenticationFilter getJwtUsernameAndPasswordAuthenticationFilter() 
+			throws Exception {
+	    final JwtUsernameAndPasswordAuthenticationFilter filter = 
+	    		new JwtUsernameAndPasswordAuthenticationFilter(jwtConfig, secretKey);
+	    filter.setAuthenticationManager(authenticationManager());
+	    filter.setFilterProcessesUrl("/api/login");
+	    return filter;
+	}
 
 }

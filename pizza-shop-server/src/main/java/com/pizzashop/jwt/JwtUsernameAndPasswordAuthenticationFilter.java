@@ -24,27 +24,25 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Date;
 
-/*
+/**
  * Used to verify the credentials of the user using their
- * username and password.
+ * username and password. Only responds to "/api/login" route.
  */
 @Slf4j
 public class JwtUsernameAndPasswordAuthenticationFilter
 	extends UsernamePasswordAuthenticationFilter {
 	
-	private final AuthenticationManager authManager;
+//	private final AuthenticationManager authManager;
 	private final JwtConfig jwtConfig;
 	private final SecretKey secretKey;
 	
-	public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, 
-			JwtConfig jwtConfig,
-			SecretKey secretKey) {
-		this.authManager = authManager;
+	public JwtUsernameAndPasswordAuthenticationFilter(JwtConfig jwtConfig, SecretKey secretKey) {
+//		this.authManager = authManager;
 		this.jwtConfig = jwtConfig;
 		this.secretKey = secretKey;
 	}
 	
-	/*
+	/**
 	 * Here we check if the user is authenticated i.e. here the user is attempting to
 	 * login. If there credentials are valid then we issue them a JWT within the
 	 * successfulAuthentication method.
@@ -66,7 +64,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter
 					authRequest.getPassword());
 			
 			// check username exists and password is correct
-			Authentication authenticate = authManager.authenticate(auth);
+			Authentication authenticate = getAuthenticationManager().authenticate(auth);
 			log.info(authenticate.getPrincipal().toString());
 			
 			if (authenticate.getPrincipal() instanceof User) {
