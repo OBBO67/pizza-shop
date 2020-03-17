@@ -37,7 +37,11 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
-      username: ["", Validators.required],
+      username: [
+        "",
+        [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
+      ],
+      email: ["", [Validators.required, Validators.email]],
       houseNumber: ["", Validators.required],
       addressLine1: ["", Validators.required],
       addressLine2: ["", Validators.required],
@@ -57,6 +61,10 @@ export class SignupComponent implements OnInit {
 
   get usernameGroup(): FormGroup {
     return this.signupForm.controls.username as FormGroup;
+  }
+
+  get emailGroup(): FormGroup {
+    return this.signupForm.controls.email as FormGroup;
   }
 
   get houseNumberGroup(): FormGroup {
@@ -127,6 +135,7 @@ export class SignupComponent implements OnInit {
     newUser.firstName = signUpData.firstName;
     newUser.lastName = signUpData.lastName;
     newUser.username = signUpData.username;
+    newUser.email = signUpData.email;
     newUser.addresses.push(userAddress);
     newUser.password = signUpData.password;
 

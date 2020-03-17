@@ -4,56 +4,77 @@
     <div class="col-8 d-flex justify-content-center align-items-center">
       <form class="w-50" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <h1>Sign Up!</h1>
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            formControlName="firstName"
-            class="form-control"
-            [ngClass]="{
-              'is-invalid': submitted && firstNameGroup.errors
-            }"
-          />
-          <div
-            *ngIf="submitted && firstNameGroup.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="firstNameGroup.errors.required">
-              First Name is required
+        <div class="form-row">
+          <div class="col">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              formControlName="firstName"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': submitted && firstNameGroup.errors
+              }"
+            />
+            <div
+              *ngIf="submitted && firstNameGroup.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="firstNameGroup.errors.required">
+                First Name is required
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && lastNameGroup.errors }"
+            />
+            <div
+              *ngIf="submitted && lastNameGroup.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="lastNameGroup.errors.required">
+                Last Name is required
+              </div>
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            formControlName="lastName"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && lastNameGroup.errors }"
-          />
-          <div
-            *ngIf="submitted && lastNameGroup.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="lastNameGroup.errors.required">
-              Last Name is required
+        <div class="form-row">
+          <div class="col">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && usernameGroup.errors }"
+            />
+            <div
+              *ngIf="submitted && usernameGroup.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="usernameGroup.errors.required">
+                Username is required
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            formControlName="username"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && usernameGroup.errors }"
-          />
-          <div
-            *ngIf="submitted && usernameGroup.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="usernameGroup.errors.required">
-              Username is required
+          <div class="col">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && emailGroup.errors }"
+            />
+            <div
+              *ngIf="submitted && emailGroup.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="emailGroup.errors.required">
+                Username is required
+              </div>
             </div>
           </div>
         </div>
