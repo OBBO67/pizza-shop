@@ -5,7 +5,7 @@
       <form class="w-50" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <h1>Sign Up!</h1>
         <div class="form-row">
-          <div class="col">
+          <div class="form-group col">
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -24,7 +24,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="form-group col">
             <label for="lastName">Last Name</label>
             <input
               type="text"
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="col">
+          <div class="form-group col">
             <label for="username">Username</label>
             <input
               type="text"
@@ -58,12 +58,18 @@
               <div *ngIf="usernameGroup.errors.required">
                 Username is required
               </div>
+              <div *ngIf="usernameGroup.errors.minlength">
+                Username must be at least 3 characters
+              </div>
+              <div *ngIf="usernameGroup.errors.maxlength">
+                Username must be less than 21 characters
+              </div>
             </div>
           </div>
-          <div class="col">
+          <div class="form-group col">
             <label for="email">Email</label>
             <input
-              type="text"
+              type="email"
               formControlName="email"
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && emailGroup.errors }"
@@ -73,7 +79,10 @@
               class="invalid-feedback"
             >
               <div *ngIf="emailGroup.errors.required">
-                Username is required
+                Email is required
+              </div>
+              <div *ngIf="emailGroup.errors.email">
+                Email is invalid
               </div>
             </div>
           </div>
@@ -85,6 +94,7 @@
             formControlName="houseNumber"
             class="form-control"
             placeholder="Enter your house/flat number"
+            [ngClass]="{ 'is-invalid': submitted && houseNumberGroup.errors }"
             id="houseNumber"
           />
           <div
@@ -92,7 +102,7 @@
             class="invalid-feedback"
           >
             <div *ngIf="houseNumberGroup.errors.required">
-              House number is required
+              House/Flat number is required
             </div>
           </div>
         </div>
@@ -103,6 +113,7 @@
             formControlName="addressLine1"
             class="form-control"
             placeholder="Enter your address"
+            [ngClass]="{ 'is-invalid': submitted && addressLine1Group.errors }"
             id="addressLine1"
           />
           <div
@@ -121,6 +132,7 @@
             formControlName="addressLine2"
             class="form-control"
             placeholder="Enter your address"
+            [ngClass]="{ 'is-invalid': submitted && addressLine2Group.errors }"
             id="addressLine2"
           />
           <div
@@ -132,36 +144,40 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="town">City:</label>
-          <input
-            type="text"
-            formControlName="city"
-            class="form-control"
-            placeholder="Enter your city/town"
-            id="city"
-          />
-          <div *ngIf="submitted && cityGroup.errors" class="invalid-feedback">
-            <div *ngIf="cityGroup.errors.required">
-              City is required
+        <div class="form-row">
+          <div class="form-group col-md-8">
+            <label for="town">City:</label>
+            <input
+              type="text"
+              formControlName="city"
+              class="form-control"
+              placeholder="Enter your city/town"
+              [ngClass]="{ 'is-invalid': submitted && cityGroup.errors }"
+              id="city"
+            />
+            <div *ngIf="submitted && cityGroup.errors" class="invalid-feedback">
+              <div *ngIf="cityGroup.errors.required">
+                City is required
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="postcode">Postcode:</label>
-          <input
-            type="text"
-            formControlName="postcode"
-            class="form-control"
-            placeholder="Enter your postcode"
-            id="postcode"
-          />
-          <div
-            *ngIf="submitted && postcodeGroup.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="postcodeGroup.errors.required">
-              Postcode is required
+          <div class="form-group col-md-4">
+            <label for="postcode">Postcode:</label>
+            <input
+              type="text"
+              formControlName="postcode"
+              class="form-control"
+              placeholder="Enter your postcode"
+              [ngClass]="{ 'is-invalid': submitted && postcodeGroup.errors }"
+              id="postcode"
+            />
+            <div
+              *ngIf="submitted && postcodeGroup.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="postcodeGroup.errors.required">
+                Postcode is required
+              </div>
             </div>
           </div>
         </div>
@@ -185,11 +201,7 @@
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="signupForm.invalid"
-        >
+        <button type="submit" class="btn btn-primary">
           Sign Up
         </button>
       </form>

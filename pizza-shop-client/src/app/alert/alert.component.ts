@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { AlertService } from "@app/services/alert.service";
 
-/*
+/**
  * Alert component passes alert messages to the template whenever
  * a message is recieved from the alert service. It does this by
  * subscribing to the alerts service getAlert() method which
@@ -10,7 +10,7 @@ import { AlertService } from "@app/services/alert.service";
  */
 
 @Component({
-  selector: "app-alert",
+  selector: "alert",
   templateUrl: "./alert.component.html",
   styleUrls: ["./alert.component.css"]
 })

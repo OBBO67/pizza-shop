@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { first } from "rxjs/operators";
+import { AlertService } from "@app/services/alert.service";
 
 @Component({
   selector: "app-login",
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private alertService: AlertService
   ) {
     // redirect to menu if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -49,6 +51,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    // reset the alerts when submitted
+    this.alertService.clear();
+
     // return if form is invalid
     if (this.loginForm.invalid) {
       return;
@@ -69,6 +74,7 @@ export class LoginComponent implements OnInit {
           // location.reload(true);
         },
         error => {
+          this.alertService.error(error);
           this.error = error;
         }
       );

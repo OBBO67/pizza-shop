@@ -18,7 +18,6 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
 
-  // TODO: Add alertService
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -46,7 +45,7 @@ export class SignupComponent implements OnInit {
       addressLine1: ["", Validators.required],
       addressLine2: ["", Validators.required],
       city: ["", Validators.required],
-      postcode: ["", Validators.required],
+      postcode: ["", Validators.required], // TODO: uk postcode validator
       password: ["", [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -91,7 +90,6 @@ export class SignupComponent implements OnInit {
     return this.signupForm.controls.password as FormGroup;
   }
 
-  // TODO: Handle error
   onSubmit() {
     this.submitted = true;
 
@@ -101,7 +99,6 @@ export class SignupComponent implements OnInit {
     // stop here if form is invalid
     if (this.signupForm.invalid) {
       console.log("Form is invlaid -> returning");
-      console.log(`Errors found: ${this.signupForm.errors}`);
       return;
     }
 
