@@ -22,7 +22,7 @@ const appRoutes: Routes = [
   { path: "home", component: HomepageComponent },
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
-  { path: "menu", component: MenuComponent, canActivate: [AuthGuard] }
+  { path: "menu", component: MenuComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -34,7 +34,7 @@ const appRoutes: Routes = [
     SignupComponent,
     HomepageComponent,
     MenuComponent,
-    AlertComponent
+    AlertComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -45,12 +45,12 @@ const appRoutes: Routes = [
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

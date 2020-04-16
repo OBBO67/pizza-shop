@@ -49,8 +49,18 @@
               type="text"
               formControlName="username"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && usernameGroup.errors }"
+              [ngClass]="{
+                'is-invalid':
+                  (submitted && usernameGroup.errors) ||
+                  usernameGroup.errors?.usernameTaken
+              }"
             />
+            <div *ngIf="usernameGroup.pending">Checking username...</div>
+            <div *ngIf="usernameGroup.errors" class="invalid-feedback">
+              <div *ngIf="usernameGroup.errors?.usernameTaken">
+                Username in use
+              </div>
+            </div>
             <div
               *ngIf="submitted && usernameGroup.errors"
               class="invalid-feedback"

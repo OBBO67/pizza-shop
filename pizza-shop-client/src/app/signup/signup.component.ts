@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 // import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -8,11 +8,12 @@ import { first } from "rxjs/operators";
 import { AlertService } from "@app/services/alert.service";
 import { Address } from "@app/models/customer-address";
 import { User } from "@app/models/user";
+import { UniqueUsernameValidator } from "@app/validators/uniqueusername.validator";
 
 @Component({
   selector: "app-signup",
   templateUrl: "./signup.component.html",
-  styleUrls: ["./signup.component.css"]
+  styleUrls: ["./signup.component.css"],
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
@@ -23,7 +24,9 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private usernameValidator: UniqueUsernameValidator,
+    private cd: ChangeDetectorRef
   ) {
     // redirect to menu if user already logged in
     if (this.authenticationService.currentUserValue) {
@@ -38,7 +41,17 @@ export class SignupComponent implements OnInit {
       lastName: ["", Validators.required],
       username: [
         "",
-        [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(20),
+          ],
+          asyncValidators: [
+            this.usernameValidator.validate.bind(this.usernameValidator),
+          ],
+          updateOn: "blur",
+        },
       ],
       email: ["", [Validators.required, Validators.email]],
       houseNumber: ["", Validators.required],
@@ -46,8 +59,10 @@ export class SignupComponent implements OnInit {
       addressLine2: ["", Validators.required],
       city: ["", Validators.required],
       postcode: ["", Validators.required], // TODO: uk postcode validator
-      password: ["", [Validators.required, Validators.minLength(6)]]
+      password: ["", [Validators.required, Validators.minLength(6)]],
     });
+
+    // this.usernameGroup.statusChanges.subscribe(() => this.cd.markForCheck);
   }
 
   get firstNameGroup(): FormGroup {
@@ -99,6 +114,8 @@ export class SignupComponent implements OnInit {
     // stop here if form is invalid
     if (this.signupForm.invalid) {
       console.log("Form is invlaid -> returning");
+      console.log("Username field errors:");
+      console.log(this.usernameGroup);
       return;
     }
 
@@ -113,7 +130,7 @@ export class SignupComponent implements OnInit {
     this.userService
       .signup(newUser)
       .pipe(first())
-      .subscribe(data => {
+      .subscribe((data) => {
         console.log(`Returned data: ${JSON.stringify(data)}`);
         this.alertService.success("Registration successful", true);
         this.router.navigate(["/login"]);

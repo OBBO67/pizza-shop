@@ -63,21 +63,15 @@ public class UserController {
 	
 	@PreAuthorize("permitAll()")
 	@GetMapping("/user/username")
-	public ResponseEntity<String> getUserByUsername(@RequestParam(value="username") String username) 
+	public EntityModel<User> getUserByUsername(@RequestParam(value="username") String username) 
 			throws JsonProcessingException {
 		User userExists = userRepository.findByUsername(username);
-		ObjectMapper mapper = new ObjectMapper();
 		
-		if (userExists != null) {
-			
-			log.debug("User with username already exists");
-			
-			return new ResponseEntity<>(mapper.writeValueAsString("Username taken"), 
-					HttpStatus.CONFLICT);
+		if (userExists == null) {
+			return null;
 		}
-		
-		return new ResponseEntity<>(mapper.writeValueAsString("Username available"), 
-				HttpStatus.OK);
+				
+		return assembler.toModel(userExists);
 	}
 	
 	@PreAuthorize("permitAll()")
