@@ -12,7 +12,8 @@ import lombok.Getter;
 
 public enum ApplicationUserRole {
 	
-	CUSTOMER(Sets.newHashSet(MENU_READ, MENU_WRITE));
+	CUSTOMER(Sets.newHashSet(MENU_READ)),
+	ADMIN(Sets.newHashSet(MENU_READ, MENU_WRITE));
 	
 	@Getter
 	private final Set<ApplicationUserPermission> permissions;

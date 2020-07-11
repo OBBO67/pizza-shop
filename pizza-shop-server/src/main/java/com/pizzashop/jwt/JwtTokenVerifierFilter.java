@@ -63,6 +63,7 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 			
 			String username = body.getSubject();
 			
+			@SuppressWarnings("unchecked")
 			List<Map<String, String>> authorities = 
 				(List<Map<String, String>>)	body.get("authorities");
 			
